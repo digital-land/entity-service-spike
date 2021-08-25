@@ -45,7 +45,7 @@ class Datastore:
     @retry(stop_max_attempt_number=10, wait_fixed=500)
     def lookup(self, alias):
         conn = mysql.connector.connect(pool_name="mypool")
-        qry = "SELECT id FROM slug WHERE BINARY slug = %s"
+        qry = "SELECT entity FROM slug WHERE BINARY slug = %s"
         try:
             cur = conn.cursor()
             cur.execute(qry, (alias,))
