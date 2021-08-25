@@ -1,0 +1,3 @@
+boto3
+mysql_connector
+retrying
