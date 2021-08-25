@@ -1,4 +1,4 @@
-from .datastore import datastore
+from app.datastore import datastore
 from fastapi import FastAPI, HTTPException
 
 app = FastAPI()

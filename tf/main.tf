@@ -369,9 +369,36 @@ data "aws_lb_listener" "dl_web_lb_listener" {
   port              = 80
 }
 
+data "aws_lb_listener" "dl_web_lb_listener_https" {
+  load_balancer_arn = data.aws_lb.dl_web_lb.arn
+  port              = 443
+}
+
 resource "aws_lb_listener_rule" "entity_lookup_lb_listener_rule" {
     listener_arn = data.aws_lb_listener.dl_web_lb_listener.arn
-    priority     = 2
+    priority     = 1
+    tags         = {}
+    tags_all     = {}
+
+    action {
+        order            = 1
+        target_group_arn = aws_lb_target_group.entity_lookup_target_group.arn
+        type             = "forward"
+    }
+
+    condition {
+
+        path_pattern {
+            values = [
+                "/entity*",
+            ]
+        }
+    }
+}
+
+resource "aws_lb_listener_rule" "entity_lookup_lb_listener_rule_https" {
+    listener_arn = data.aws_lb_listener.dl_web_lb_listener_https.arn
+    priority     = 1
     tags         = {}
     tags_all     = {}
 
