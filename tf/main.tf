@@ -390,7 +390,7 @@ resource "aws_lb_listener_rule" "entity_lookup_lb_listener_rule" {
 
         path_pattern {
             values = [
-                "/entity*",
+                "/search*",
             ]
         }
     }
@@ -412,7 +412,7 @@ resource "aws_lb_listener_rule" "entity_lookup_lb_listener_rule_https" {
 
         path_pattern {
             values = [
-                "/entity*",
+                "/search*",
             ]
         }
     }
