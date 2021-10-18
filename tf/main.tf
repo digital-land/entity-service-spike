@@ -40,6 +40,19 @@ provider "aws" {
   }
 }
 
+variable "aurora_db_username" {
+  description = "Database administrator username"
+  type        = string
+  sensitive   = true
+}
+
+variable "aurora_db_password" {
+  description = "Database administrator password"
+  type        = string
+  sensitive   = true
+}
+
+
 resource "aws_rds_cluster" "aurora_cluster" {
     availability_zones                  = [
         "eu-west-2a",
@@ -264,7 +277,14 @@ resource "aws_ecs_task_definition" "entity_lookup_task" {
         [
             {
                 cpu              = 0
-                environment      = []
+                environment      = [{
+                    "name" : "DB_USERNAME",
+                    "value": "${var.aurora_db_username}"
+                }, 
+                {
+                    "name" : "DB_PASSWORD"
+                    "value": "${var.aurora_db_password}"
+                }]
                 essential        = true
                 image            = "public.ecr.aws/l6z6v3j6/entity-lookup:latest"
                 logConfiguration = {
