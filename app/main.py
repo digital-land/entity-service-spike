@@ -6,9 +6,9 @@ app = FastAPI()
 datastore.connect()
 
 
-@app.get("/entity")
-def read_entity(alias: str):
-    entity_id = datastore.lookup(alias)
+@app.get("/search")
+def read_entity(slug: str):
+    entity_id = datastore.lookup(slug)
     if not entity_id:
         raise HTTPException(status_code=404, detail="Entity not found")
     return entity_id
