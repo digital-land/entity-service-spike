@@ -14,7 +14,6 @@ logger = logging.getLogger(__name__)
 ENDPOINT = "database-1.cluster-czb2e1jr2ad8.eu-west-2.rds.amazonaws.com"
 DBNAME = "test"
 PORT = "3306"
-USR = "admin"
 REGION = "eu-west-2"
 os.environ["LIBMYSQL_ENABLE_CLEARTEXT_PLUGIN"] = "1"
 
@@ -27,8 +26,8 @@ class Datastore:
             logger.info("connecting to RDS")
             self.conn = mysql.connector.connect(
                 host=ENDPOINT,
-                user=USR,
-                passwd="dbpassword",
+                user=os.environ['DB_USERNAME'],
+                passwd=os.environ['DB_PASSWORD'],
                 port=PORT,
                 database=DBNAME,
                 pool_name="mypool",
